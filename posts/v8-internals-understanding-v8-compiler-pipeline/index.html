@@ -79,7 +79,7 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
             
                 <li>
                     <a 
-                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        href='https://github.com/SanjayVardhan'
                         target="_blank"
                         title="GitHub"
                         rel="me"
@@ -99,7 +99,7 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
             
                 <li>
                     <a 
-                        href='https://twitter.com'
+                        href='https://twitter.com/0xspektre'
                         target="_blank"
                         title="Twitter"
                         rel="me"
@@ -302,7 +302,7 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
 <h2 id="introduction">Introduction</h2>
 <p>V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.</p>
 <h2 id="compiler-pipeline">Compiler Pipeline</h2>
-<p><img src="/images/Untitled-2023-08-13-1007.png"
+<p><img src="/V8_Internals_1/Untitled-2023-08-13-1007.png"
 	
 	
 	
@@ -480,41 +480,41 @@ The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (
 <p>The Turbofan first converts each bytecode instruction into a collection of nodes which results in a representation called <code>Sea of Nodes</code>. It combines aspects of both Data Flow Graphs (DFG) and Control Flow Graphs (CFG).</p>
 <p>Sea of Nodes graphs have three types of edges:</p>
 <ol>
-<li><strong>Value Edges</strong>: Represent the flow of data between operations.
-<img src="/images/value_edge.png"
+<li>
+<p><strong>Value Edges</strong>: Represent the flow of data between operations.</p>
+<p><img src="/V8_Internals_1/value_edge.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="Value"
 	
-	
-></li>
-<li><strong>Control Edges</strong>: Dictate the program&rsquo;s control flow.
-<img src="/images/control_edge.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Control"
-	
-	
-></li>
-<li><strong>Effect Edges</strong>: Ensure operations are executed in the correct order.
-<img src="/images/NumberAdd_graphbuilder.png"
+></p>
+</li>
+<li>
+<p><strong>Control Edges</strong>: Dictate the program&rsquo;s control flow.</p>
+<p><img src="/V8_Internals_1/control_edge.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="Number_Add"
+	
+></p>
+</li>
+<li>
+<p><strong>Effect Edges</strong>: Ensure operations are executed in the correct order.</p>
+<p><img src="/V8_Internals_1/NumberAdd_graphbuilder.png"
 	
 	
->
-<em>source:</em> <a class="link" href="https://doar-e.github.io/blog/2019/01/28/introduction-to-turbofan/#effect-edges"  target="_blank" rel="noopener"
-    >Introduction to TurboFan (doar-e.github.io)</a></li>
+	
+	loading="lazy"
+	
+	
+></p>
+<p><em>source:</em> <a class="link" href="https://doar-e.github.io/blog/2019/01/28/introduction-to-turbofan/#effect-edges"  target="_blank" rel="noopener"
+    >Introduction to TurboFan (doar-e.github.io)</a></p>
+</li>
 </ol>
 <p>So, all the optimizations happen in the sea of node graph.</p>
 <p>Next part of this series will be focusing on Turbofan and how it uses <code>Sea of Nodes</code> during various optimizations phases.</p>
