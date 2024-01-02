@@ -62,6 +62,30 @@
         <guid>https://sanjayvardhan.github.io/tags/webkit/</guid>
         <description></description>
         </item>
+        <item>
+        <title>bi0sCTF2022</title>
+        <link>https://sanjayvardhan.github.io/tags/bi0sctf2022/</link>
+        <pubDate>Tue, 24 Jan 2023 05:01:57 +0000</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/bi0sctf2022/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Double Fetch Race Condition</title>
+        <link>https://sanjayvardhan.github.io/tags/double-fetch-race-condition/</link>
+        <pubDate>Tue, 24 Jan 2023 05:01:57 +0000</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/double-fetch-race-condition/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SROP</title>
+        <link>https://sanjayvardhan.github.io/tags/srop/</link>
+        <pubDate>Tue, 24 Jan 2023 05:01:57 +0000</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/srop/</guid>
+        <description></description>
+        </item>
         
     </channel>
 </rss>
