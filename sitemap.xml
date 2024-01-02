@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>sanjayvardhan.github.io/</loc>
+    <lastmod>2024-01-02T06:32:41+05:30</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/post/</loc>
+    <lastmod>2024-01-02T06:32:41+05:30</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/posts/v8_internals_1/</loc>
+    <lastmod>2024-01-02T06:32:41+05:30</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/posts/the-holy-hole-analysis-of-cve-2023-2033/</loc>
+    <lastmod>2024-01-02T06:24:00+05:30</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/posts/notes-on-cve-2016-4622/</loc>
+    <lastmod>2024-01-02T06:19:43+05:30</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/archives/</loc>
+    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/page/</loc>
+    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>sanjayvardhan.github.io/categories/example-category/</loc>
+  </url><url>
+    <loc>sanjayvardhan.github.io/</loc>
+  </url><url>
+    <loc>sanjayvardhan.github.io/categories/</loc>
+  </url><url>
+    <loc>sanjayvardhan.github.io/search/</loc>
+  </url><url>
+    <loc>sanjayvardhan.github.io/tags/</loc>
+  </url>
+</urlset>
