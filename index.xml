@@ -7,16 +7,25 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Tue, 02 Jan 2024 06:32:41 +0530</lastBuildDate><atom:link href="https://sanjayvardhan.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>V8_Internals_1</title>
-        <link>https://sanjayvardhan.github.io/posts/v8_internals_1/</link>
+        <title>V8 Internals - Understanding V8 Compiler Pipeline</title>
+        <link>https://sanjayvardhan.github.io/posts/v8-internals-understanding-v8-compiler-pipeline/</link>
         <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
         
-        <guid>https://sanjayvardhan.github.io/posts/v8_internals_1/</guid>
+        <guid>https://sanjayvardhan.github.io/posts/v8-internals-understanding-v8-compiler-pipeline/</guid>
         <description>&lt;h1 id=&#34;understanding-v8s-compiler-pipeline&#34;&gt;Understanding V8&amp;rsquo;s Compiler Pipeline&lt;/h1&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.&lt;/p&gt;
 &lt;h2 id=&#34;compiler-pipeline&#34;&gt;Compiler Pipeline&lt;/h2&gt;
-&lt;p&gt;*![[Untitled-2023-08-13-1007.png]]&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://sanjayvardhan.github.io/images/Untitled-2023-08-13-1007.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Pipeline&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;h3 id=&#34;high-level-overview-the-life-cycle-of-a-javascript-source-in-the-v8-engine&#34;&gt;High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine&lt;/h3&gt;
 &lt;p&gt;Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly. Most compilers, including V8, follow a similar initial compilation pipeline:&lt;/p&gt;
 &lt;ol&gt;
@@ -186,11 +195,38 @@ The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (
 &lt;p&gt;Sea of Nodes graphs have three types of edges:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Value Edges&lt;/strong&gt;: Represent the flow of data between operations.
-![[value_edge.png]]&lt;/li&gt;
+&lt;img src=&#34;https://sanjayvardhan.github.io/images/value_edge.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Value&#34;
+	
+	
+&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Control Edges&lt;/strong&gt;: Dictate the program&amp;rsquo;s control flow.
-![[control_edge.png]]&lt;/li&gt;
+&lt;img src=&#34;https://sanjayvardhan.github.io/images/control_edge.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Control&#34;
+	
+	
+&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Effect Edges&lt;/strong&gt;: Ensure operations are executed in the correct order.
-![[NumberAdd_graphbuilder.png]]
+&lt;img src=&#34;https://sanjayvardhan.github.io/images/NumberAdd_graphbuilder.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Number_Add&#34;
+	
+	
+&gt;
 &lt;em&gt;source:&lt;/em&gt; &lt;a class=&#34;link&#34; href=&#34;https://doar-e.github.io/blog/2019/01/28/introduction-to-turbofan/#effect-edges&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Introduction to TurboFan (doar-e.github.io)&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
