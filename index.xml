@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>spektre</title>
-        <link>sanjayvardhan.github.io/</link>
+        <link>https://sanjayvardhan.github.io/</link>
         <description>Recent content on spektre</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 02 Jan 2024 06:32:41 +0530</lastBuildDate><atom:link href="sanjayvardhan.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 02 Jan 2024 06:32:41 +0530</lastBuildDate><atom:link href="https://sanjayvardhan.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>V8_Internals_1</title>
-        <link>sanjayvardhan.github.io/posts/v8_internals_1/</link>
+        <link>https://sanjayvardhan.github.io/posts/v8_internals_1/</link>
         <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
         
-        <guid>sanjayvardhan.github.io/posts/v8_internals_1/</guid>
+        <guid>https://sanjayvardhan.github.io/posts/v8_internals_1/</guid>
         <description>&lt;h1 id=&#34;understanding-v8s-compiler-pipeline&#34;&gt;Understanding V8&amp;rsquo;s Compiler Pipeline&lt;/h1&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.&lt;/p&gt;
@@ -200,10 +200,10 @@ The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (
         </item>
         <item>
         <title>The Holy Hole - Analysis of CVE-2023-2033</title>
-        <link>sanjayvardhan.github.io/posts/the-holy-hole-analysis-of-cve-2023-2033/</link>
+        <link>https://sanjayvardhan.github.io/posts/the-holy-hole-analysis-of-cve-2023-2033/</link>
         <pubDate>Tue, 02 Jan 2024 06:24:00 +0530</pubDate>
         
-        <guid>sanjayvardhan.github.io/posts/the-holy-hole-analysis-of-cve-2023-2033/</guid>
+        <guid>https://sanjayvardhan.github.io/posts/the-holy-hole-analysis-of-cve-2023-2033/</guid>
         <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;I have been following v8 exploits related to hole for sometime now and I found CVE-2023-2033 really interesting. So I thought documenting whatever I learn while doing the analysis of this CVE will help me understand it even better.&lt;/p&gt;
 &lt;h3 id=&#34;hole&#34;&gt;Hole&lt;/h3&gt;
@@ -559,10 +559,10 @@ Differences to previous behaviour:
         </item>
         <item>
         <title>Notes on CVE-2016-4622</title>
-        <link>sanjayvardhan.github.io/posts/notes-on-cve-2016-4622/</link>
+        <link>https://sanjayvardhan.github.io/posts/notes-on-cve-2016-4622/</link>
         <pubDate>Tue, 02 Jan 2024 06:19:43 +0530</pubDate>
         
-        <guid>sanjayvardhan.github.io/posts/notes-on-cve-2016-4622/</guid>
+        <guid>https://sanjayvardhan.github.io/posts/notes-on-cve-2016-4622/</guid>
         <description>&lt;h2 id=&#34;bug-analysis&#34;&gt;Bug Analysis&lt;/h2&gt;
 &lt;p&gt;The vulnerability is present in the (slightly commented) implementation of ArrayProtoSlice.&lt;/p&gt;
 &lt;p&gt;first, let us see what is slice method and how it works.&lt;/p&gt;
@@ -1349,26 +1349,26 @@ Typed Arrays store raw binary data, we can get arbitrary read/write if we contro
         </item>
         <item>
         <title>Archives</title>
-        <link>sanjayvardhan.github.io/archives/</link>
+        <link>https://sanjayvardhan.github.io/archives/</link>
         <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
         
-        <guid>sanjayvardhan.github.io/archives/</guid>
+        <guid>https://sanjayvardhan.github.io/archives/</guid>
         <description></description>
         </item>
         <item>
         <title></title>
-        <link>sanjayvardhan.github.io/</link>
+        <link>https://sanjayvardhan.github.io/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>sanjayvardhan.github.io/</guid>
+        <guid>https://sanjayvardhan.github.io/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>sanjayvardhan.github.io/search/</link>
+        <link>https://sanjayvardhan.github.io/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>sanjayvardhan.github.io/search/</guid>
+        <guid>https://sanjayvardhan.github.io/search/</guid>
         <description></description>
         </item>
         
