@@ -5,6 +5,63 @@
         <link>https://sanjayvardhan.github.io/tags/</link>
         <description>Recent content in Tags on spektre</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language><atom:link href="https://sanjayvardhan.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+        <language>en-us</language>
+        <lastBuildDate>Tue, 02 Jan 2024 06:32:41 +0530</lastBuildDate><atom:link href="https://sanjayvardhan.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Browser</title>
+        <link>https://sanjayvardhan.github.io/tags/browser/</link>
+        <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/browser/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Internals</title>
+        <link>https://sanjayvardhan.github.io/tags/internals/</link>
+        <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/internals/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>V8</title>
+        <link>https://sanjayvardhan.github.io/tags/v8/</link>
+        <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/v8/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Analysis</title>
+        <link>https://sanjayvardhan.github.io/tags/analysis/</link>
+        <pubDate>Tue, 02 Jan 2024 06:24:00 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/analysis/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>CVE</title>
+        <link>https://sanjayvardhan.github.io/tags/cve/</link>
+        <pubDate>Tue, 02 Jan 2024 06:24:00 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/cve/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Exploitation</title>
+        <link>https://sanjayvardhan.github.io/tags/exploitation/</link>
+        <pubDate>Tue, 02 Jan 2024 06:19:43 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/exploitation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>WebKit</title>
+        <link>https://sanjayvardhan.github.io/tags/webkit/</link>
+        <pubDate>Tue, 02 Jan 2024 06:19:43 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/webkit/</guid>
+        <description></description>
+        </item>
+        
     </channel>
 </rss>
