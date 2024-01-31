@@ -311,6 +311,7 @@ Sqlite3 Internals SQLite3 uses a bytecode engine. First, it translates SQL state
 ></p>
 <p>You can take a look at all the opcodes <a class="link" href="https://www.sqlite.org/opcode.html#the_opcodes"  target="_blank" rel="noopener"
     >here</a>.</p>
+<h3 id="bug-analysis">Bug Analysis</h3>
 <p>The challenge essentially involves four things:</p>
 <ol>
 <li>Adding a query.</li>
@@ -319,7 +320,6 @@ Sqlite3 Internals SQLite3 uses a bytecode engine. First, it translates SQL state
 <li>Exiting.</li>
 </ol>
 <p>The functionality is pretty straightforward, but there is a hidden function called <code>inscribe()</code>, which is where the bug lies.</p>
-<h3 id="bug-analysis">Bug Analysis</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -386,7 +386,7 @@ Sqlite3 Internals SQLite3 uses a bytecode engine. First, it translates SQL state
 	
 ></p>
 <p>It handles queries like <code>SELECT 1.1</code> in the same way.</p>
-<p>Now, what if we overwrite the last byte of the pointer with an address that points to a heap location? This would result in a heap leak. By exploiting this heap leak, we can achieve arbitrary read access on the heap. Utilizing this, we can leak the PIE address and then leak the printf GOT to obtain the libc address.</p>
+<p>Now, what if we overwrite the last byte of the pointer with an address that points to some useful heap location? This would result in a heap leak. By exploiting this heap leak, we can achieve arbitrary read access on the heap. Utilizing this, we can leak the PIE address and then leak the printf GOT to obtain the libc address.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
