@@ -59,14 +59,14 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;13.8.1 The Addition Operator ( + )
-NOTE
-The addition operator either performs string concatenation or numeric addition.
-
-13.8.1.1 Runtime Semantics: Evaluation
-AdditiveExpression : AdditiveExpression + MultiplicativeExpression
-1. Return ? EvaluateStringOrNumericBinaryExpression(AdditiveExpression, +, MultiplicativeExpression).
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;13.8.1 The Addition Operator ( + )
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;NOTE
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The addition operator either performs string concatenation or numeric addition.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;13.8.1.1 Runtime Semantics: Evaluation
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;AdditiveExpression : AdditiveExpression + MultiplicativeExpression
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1. Return ? EvaluateStringOrNumericBinaryExpression(AdditiveExpression, +, MultiplicativeExpression).
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -80,15 +80,15 @@ AdditiveExpression : AdditiveExpression + MultiplicativeExpression
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;13.15.4 EvaluateStringOrNumericBinaryExpression ( leftOperand, opText, rightOperand )
-The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments leftOperand (a Parse Node), opText (a sequence of Unicode code points), and rightOperand (a Parse Node) and returns either a normal completion containing either a String, a BigInt, or a Number, or an abrupt completion. It performs the following steps when called:
-
-1. Let lref be ? Evaluation of leftOperand.
-2. Let lval be ? GetValue(lref).
-3. Let rref be ? Evaluation of rightOperand.
-4. Let rval be ? GetValue(rref).
-5. Return ? ApplyStringOrNumericBinaryOperator(lval, opText, rval).
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;13.15.4 EvaluateStringOrNumericBinaryExpression ( leftOperand, opText, rightOperand )
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments leftOperand (a Parse Node), opText (a sequence of Unicode code points), and rightOperand (a Parse Node) and returns either a normal completion containing either a String, a BigInt, or a Number, or an abrupt completion. It performs the following steps when called:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1. Let lref be ? Evaluation of leftOperand.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2. Let lval be ? GetValue(lref).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3. Let rref be ? Evaluation of rightOperand.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4. Let rval be ? GetValue(rref).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;5. Return ? ApplyStringOrNumericBinaryOperator(lval, opText, rval).
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -138,51 +138,51 @@ The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments l
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;13.15.3 ApplyStringOrNumericBinaryOperator ( lval, opText, rval )
-The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (an ECMAScript language value), opText (**, *, /, %, +, -, &amp;lt;&amp;lt;, &amp;gt;&amp;gt;, &amp;gt;&amp;gt;&amp;gt;, &amp;amp;, ^, or |), and rval (an ECMAScript language value) and returns either a normal completion containing either a String, a BigInt, or a Number, or a throw completion. It performs the following steps when called:
-
-1. If opText is +, then
-    a. Let lprim be ? ToPrimitive(lval).
-    b. Let rprim be ? ToPrimitive(rval).
-    c. If lprim is a String or rprim is a String, then
-        i. Let lstr be ? ToString(lprim).
-        ii. Let rstr be ? ToString(rprim).
-        iii. Return the string-concatenation of lstr and rstr.
-    d. Set lval to lprim.
-    e. Set rval to rprim.
-2. NOTE: At this point, it must be a numeric operation.
-3. Let lnum be ? ToNumeric(lval).
-4. Let rnum be ? ToNumeric(rval).
-5. If Type(lnum) is not Type(rnum), throw a TypeError exception.
-6. If lnum is a BigInt, then
-    a. If opText is **, return ? BigInt::exponentiate(lnum, rnum).
-    b. If opText is /, return ? BigInt::divide(lnum, rnum).
-    c. If opText is %, return ? BigInt::remainder(lnum, rnum).
-    d. If opText is &amp;gt;&amp;gt;&amp;gt;, return ? BigInt::unsignedRightShift(lnum, rnum).
-7. Let operation be the abstract operation associated with opText and Type(lnum) in the following table:
-        opText	Type(lnum)	operation
-        **	Number	Number::exponentiate
-        *	Number	Number::multiply
-	*	BigInt	BigInt::multiply
-	/	Number	Number::divide
-	%	Number	Number::remainder
-	+	Number	Number::add
-	+	BigInt	BigInt::add
-	-	Number	Number::subtract
-	-	BigInt	BigInt::subtract
-	&amp;lt;&amp;lt;	Number	Number::leftShift
-	&amp;lt;&amp;lt;	BigInt	BigInt::leftShift
-	&amp;gt;&amp;gt;	Number	Number::signedRightShift
-	&amp;gt;&amp;gt;	BigInt	BigInt::signedRightShift
-	&amp;gt;&amp;gt;&amp;gt;	Number	Number::unsignedRightShift
-	&amp;amp;	Number	Number::bitwiseAND
-	&amp;amp;	BigInt	BigInt::bitwiseAND
-	^	Number	Number::bitwiseXOR
-	^	BigInt	BigInt::bitwiseXOR
-	|	Number	Number::bitwiseOR
-	|	BigInt	BigInt::bitwiseOR
-8. Return operation(lnum, rnum).
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;13.15.3 ApplyStringOrNumericBinaryOperator ( lval, opText, rval )
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (an ECMAScript language value), opText (**, *, /, %, +, -, &amp;lt;&amp;lt;, &amp;gt;&amp;gt;, &amp;gt;&amp;gt;&amp;gt;, &amp;amp;, ^, or |), and rval (an ECMAScript language value) and returns either a normal completion containing either a String, a BigInt, or a Number, or a throw completion. It performs the following steps when called:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1. If opText is +, then
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    a. Let lprim be ? ToPrimitive(lval).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    b. Let rprim be ? ToPrimitive(rval).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    c. If lprim is a String or rprim is a String, then
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        i. Let lstr be ? ToString(lprim).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        ii. Let rstr be ? ToString(rprim).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        iii. Return the string-concatenation of lstr and rstr.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    d. Set lval to lprim.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    e. Set rval to rprim.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2. NOTE: At this point, it must be a numeric operation.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;3. Let lnum be ? ToNumeric(lval).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4. Let rnum be ? ToNumeric(rval).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;5. If Type(lnum) is not Type(rnum), throw a TypeError exception.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;6. If lnum is a BigInt, then
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    a. If opText is **, return ? BigInt::exponentiate(lnum, rnum).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    b. If opText is /, return ? BigInt::divide(lnum, rnum).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    c. If opText is %, return ? BigInt::remainder(lnum, rnum).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    d. If opText is &amp;gt;&amp;gt;&amp;gt;, return ? BigInt::unsignedRightShift(lnum, rnum).
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7. Let operation be the abstract operation associated with opText and Type(lnum) in the following table:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        opText	Type(lnum)	operation
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        **	Number	Number::exponentiate
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        *	Number	Number::multiply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	*	BigInt	BigInt::multiply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	/	Number	Number::divide
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	%	Number	Number::remainder
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	+	Number	Number::add
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	+	BigInt	BigInt::add
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-	Number	Number::subtract
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-	BigInt	BigInt::subtract
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;lt;&amp;lt;	Number	Number::leftShift
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;lt;&amp;lt;	BigInt	BigInt::leftShift
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;gt;&amp;gt;	Number	Number::signedRightShift
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;gt;&amp;gt;	BigInt	BigInt::signedRightShift
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;gt;&amp;gt;&amp;gt;	Number	Number::unsignedRightShift
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;amp;	Number	Number::bitwiseAND
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&amp;amp;	BigInt	BigInt::bitwiseAND
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	^	Number	Number::bitwiseXOR
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	^	BigInt	BigInt::bitwiseXOR
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	|	Number	Number::bitwiseOR
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	|	BigInt	BigInt::bitwiseOR
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;8. Return operation(lnum, rnum).
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;All these steps for a seemingly simple addition highlight why optimization is crucial. V8 engages in &amp;ldquo;speculation&amp;rdquo; during the execution of JavaScript code, collecting information to use when the engine decides to tier up, thus producing optimized code.&lt;/p&gt;
 &lt;h3 id=&#34;speculative-optimization&#34;&gt;Speculative Optimization&lt;/h3&gt;

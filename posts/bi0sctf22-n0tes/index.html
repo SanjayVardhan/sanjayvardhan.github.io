@@ -2,21 +2,24 @@
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='tl;dr
- Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&amp;quot;/bin/sh\x00&amp;quot;) '>
+Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&quot;/bin/sh\x00&quot;) '>
 <title>bi0sCTF22 - n0tes</title>
 
 <link rel='canonical' href='https://sanjayvardhan.github.io/posts/bi0sctf22-n0tes/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='bi0sCTF22 - n0tes'>
 <meta property='og:description' content='tl;dr
- Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&amp;quot;/bin/sh\x00&amp;quot;) '>
+Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&quot;/bin/sh\x00&quot;) '>
 <meta property='og:url' content='https://sanjayvardhan.github.io/posts/bi0sctf22-n0tes/'>
 <meta property='og:site_name' content='spektre'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='bi0sCTF2022' /><meta property='article:tag' content='Double Fetch Race Condition' /><meta property='article:tag' content='SROP' /><meta property='article:published_time' content='2023-01-24T05:01:57&#43;00:00'/><meta property='article:modified_time' content='2023-01-24T05:01:57&#43;00:00'/>
 <meta name="twitter:title" content="bi0sCTF22 - n0tes">
 <meta name="twitter:description" content="tl;dr
- Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&amp;quot;/bin/sh\x00&amp;quot;) ">
+Double fetch race Condition in store_note function. overwrite size during race window to get buffer overflow. Do SROP for execve(&quot;/bin/sh\x00&quot;) ">
     <link rel="shortcut icon" href="/favicon.png" />
+
+  
+
 
     </head>
     <body class="
@@ -59,7 +62,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu57344d127bf18d6098b7d59f0847eb26_46956_300x0_resize_box_3.png" width="300"
+                        <img src="/img/avatar_hu4832408906922234309.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -181,6 +184,25 @@
         
 
         <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sanjayvardhan.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
             
             
         </div>
@@ -317,12 +339,12 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">    Arch:     amd64-64-little
-    RELRO:    Full RELRO
-    Stack:    No canary found
-    NX:       NX enabled
-    PIE:      No PIE <span class="o">(</span>0x400000<span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">    Arch:     amd64-64-little
+</span></span><span class="line"><span class="cl">    RELRO:    Full RELRO
+</span></span><span class="line"><span class="cl">    Stack:    No canary found
+</span></span><span class="line"><span class="cl">    NX:       NX enabled
+</span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x400000<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>On reversing the binary, we can see there are 6 options avaiable:</p>
 <ol>
@@ -351,18 +373,18 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">store_note</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note ID: &#34;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
-  <span class="n">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Name: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
-  <span class="n">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Size: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
-  <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Content: &#34;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
-  <span class="n">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
-  <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">store_note</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note ID: &#34;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Name: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Size: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Content: &#34;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Functions running on thread 2 :</p>
 <div class="highlight"><div class="chroma">
@@ -389,33 +411,31 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">process</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">){</span>
-  <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">64</span> <span class="o">||</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Size Limit Exceeded</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
-    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-  <span class="p">}</span>  
-  <span class="n">encrypt_text</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
-  <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
-  <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Sent!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
-  <span class="n">memcpy</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>  
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="o">*</span><span class="nf">thread2</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">){</span>
-    <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
-  <span class="p">}</span>
-  <span class="n">process</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
-  <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">thread2_done</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">process</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">64</span> <span class="o">||</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Size Limit Exceeded</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">  <span class="nf">encrypt_text</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Sent!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">memcpy</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">,</span> <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">thread2</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size_input</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">process</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">thread2_done</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>thread2() starts once store_input is done. If you look closely, we can see there is a Race Condition in process() function which Double fetches size for size check and memcpy, with a sleep() in between. Which gives us enough time to overwrite the size in the race window using Upgrade().</p>
 <p>Upgrade() :</p>
@@ -433,17 +453,17 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">upgrade_note</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">thread2_done</span> <span class="o">==</span> <span class="nb">false</span><span class="p">){</span>
-        <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Error</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Size: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
-  <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
-  <span class="n">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Name: &#34;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
-  <span class="n">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">upgrade_note</span><span class="p">(</span><span class="n">sh_mem</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">thread2_done</span> <span class="o">==</span> <span class="nb">false</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Error</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Note Size: &#34;</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">syscall</span><span class="p">(</span><span class="n">SYS_write</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#34;Enter Name: &#34;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>we can only use upgrade if thread2() completes executing as it checks if <code>ptr-&gt;thread2_done</code> is false.
 in thread2(), ptr-&gt;size_input is set to <code>false</code> every time loop, but <code>ptr-&gt;thread2_done</code> is not reset, so we can use upgrade_note() during store_note() anytime after the first loop is done. This allows us to overwrite size during the race window to get buffer overflow.</p>
@@ -471,7 +491,7 @@ in thread2(), ptr-&gt;size_input is set to <code>false</code> every time loop, b
     
     <section class="article-tags">
         
-            <a href="/tags/bi0sctf2022/">bi0sCTF2022</a>
+            <a href="/tags/bi0sctf2022/">Bi0sCTF2022</a>
         
             <a href="/tags/double-fetch-race-condition/">Double Fetch Race Condition</a>
         
@@ -494,6 +514,19 @@ in thread2(), ptr-&gt;size_input is set to <code>false</code> every time loop, b
     <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/ctfzone-quals-2024-wasminator/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CTFZone Quals 2024 - Wasminator</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">

@@ -3,15 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://sanjayvardhan.github.io/</loc>
-    <lastmod>2024-01-13T14:02:58+05:30</lastmod>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
   </url><url>
-    <loc>https://sanjayvardhan.github.io/tags/binary-exploitation/</loc>
-    <lastmod>2024-01-13T14:02:58+05:30</lastmod>
+    <loc>https://sanjayvardhan.github.io/tags/browser-exploitation/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/categories/browser-exploitation/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/categories/</loc>
-    <lastmod>2024-01-13T14:02:58+05:30</lastmod>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/categories/ctf-writeup/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/tags/ctfzone-quals-2024/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/posts/ctfzone-quals-2024-wasminator/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/post/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/tags/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/tags/v8/</loc>
+    <lastmod>2024-08-22T16:55:07+05:30</lastmod>
+  </url><url>
+    <loc>https://sanjayvardhan.github.io/tags/binary-exploitation/</loc>
     <lastmod>2024-01-13T14:02:58+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/posts/irisctf-2024-sequilitis/</loc>
@@ -20,13 +41,7 @@
     <loc>https://sanjayvardhan.github.io/tags/irisctf2024/</loc>
     <lastmod>2024-01-13T14:02:58+05:30</lastmod>
   </url><url>
-    <loc>https://sanjayvardhan.github.io/post/</loc>
-    <lastmod>2024-01-13T14:02:58+05:30</lastmod>
-  </url><url>
     <loc>https://sanjayvardhan.github.io/tags/sqlite3/</loc>
-    <lastmod>2024-01-13T14:02:58+05:30</lastmod>
-  </url><url>
-    <loc>https://sanjayvardhan.github.io/tags/</loc>
     <lastmod>2024-01-13T14:02:58+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/tags/browser/</loc>
@@ -38,16 +53,10 @@
     <loc>https://sanjayvardhan.github.io/categories/internals/</loc>
     <lastmod>2024-01-02T06:32:41+05:30</lastmod>
   </url><url>
-    <loc>https://sanjayvardhan.github.io/tags/v8/</loc>
-    <lastmod>2024-01-02T06:32:41+05:30</lastmod>
-  </url><url>
     <loc>https://sanjayvardhan.github.io/posts/v8-internals-understanding-v8-compiler-pipeline/</loc>
     <lastmod>2024-01-02T06:32:41+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/tags/analysis/</loc>
-    <lastmod>2024-01-02T06:24:00+05:30</lastmod>
-  </url><url>
-    <loc>https://sanjayvardhan.github.io/categories/browser-exploitation/</loc>
     <lastmod>2024-01-02T06:24:00+05:30</lastmod>
   </url><url>
     <loc>https://sanjayvardhan.github.io/tags/cve/</loc>

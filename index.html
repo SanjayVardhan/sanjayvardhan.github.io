@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head>
-	<meta name="generator" content="Hugo 0.92.2" /><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=''>
-<title></title>
+	<meta name="generator" content="Hugo 0.133.0"><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='CTF Player | Browser Exploitation'>
+<title>spektre</title>
 
 <link rel='canonical' href='https://sanjayvardhan.github.io/'>
 
-<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content=''>
-<meta property='og:description' content=''>
+<link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='spektre'>
+<meta property='og:description' content='CTF Player | Browser Exploitation'>
 <meta property='og:url' content='https://sanjayvardhan.github.io/'>
 <meta property='og:site_name' content='spektre'>
-<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2024-01-13T14:02:58&#43;05:30 '/>
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content=""><link rel="alternate" type="application/rss&#43;xml" href="https://sanjayvardhan.github.io/index.xml">
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2024-08-22T16:55:07&#43;05:30 '/>
+<meta name="twitter:title" content="spektre">
+<meta name="twitter:description" content="CTF Player | Browser Exploitation"><link rel="alternate" type="application/rss&#43;xml" href="https://sanjayvardhan.github.io/index.xml">
     <link rel="shortcut icon" href="/favicon.png" />
+
+  
+
 
     </head>
     <body class="">
@@ -55,7 +58,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu57344d127bf18d6098b7d59f0847eb26_46956_300x0_resize_box_3.png" width="300"
+                        <img src="/img/avatar_hu4832408906922234309.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -177,6 +180,25 @@
         
 
         <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sanjayvardhan.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
             
             
         </div>
@@ -228,7 +250,7 @@
                     <a href="/archives/#2024">
                         
                             <span class="year">2024</span>
-                            <span class="count">3</span>
+                            <span class="count">4</span>
                         
                     </a> 
                 </div>
@@ -263,11 +285,11 @@
 
     <div class="tagCloud-tags">
         
-            <a href="/categories/browser-exploitation/" class="font_size_2">
+            <a href="/categories/browser-exploitation/" class="font_size_3">
                 Browser Exploitation
             </a>
         
-            <a href="/categories/ctf-writeup/" class="font_size_2">
+            <a href="/categories/ctf-writeup/" class="font_size_3">
                 CTF Writeup
             </a>
         
@@ -300,12 +322,12 @@
                 Browser
             </a>
         
-            <a href="/tags/cve/" class="font_size_2">
-                CVE
+            <a href="/tags/v8/" class="font_size_3">
+                V8
             </a>
         
-            <a href="/tags/v8/" class="font_size_2">
-                V8
+            <a href="/tags/cve/" class="font_size_2">
+                CVE
             </a>
         
             <a href="/tags/analysis/" class="font_size_1">
@@ -313,11 +335,19 @@
             </a>
         
             <a href="/tags/bi0sctf2022/" class="font_size_1">
-                bi0sCTF2022
+                Bi0sCTF2022
             </a>
         
             <a href="/tags/binary-exploitation/" class="font_size_1">
                 Binary Exploitation
+            </a>
+        
+            <a href="/tags/browser-exploitation/" class="font_size_1">
+                Browser Exploitation
+            </a>
+        
+            <a href="/tags/ctfzone-quals-2024/" class="font_size_1">
+                CTFZone Quals 2024
             </a>
         
             <a href="/tags/double-fetch-race-condition/" class="font_size_1">
@@ -326,14 +356,6 @@
         
             <a href="/tags/exploitation/" class="font_size_1">
                 Exploitation
-            </a>
-        
-            <a href="/tags/internals/" class="font_size_1">
-                Internals
-            </a>
-        
-            <a href="/tags/irisctf2024/" class="font_size_1">
-                IrisCTF2024
             </a>
         
     </div>
@@ -350,6 +372,77 @@
     
 
     <section class="article-list">
+        
+            
+<article class="">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf-writeup/" >
+                CTF Writeup
+            </a>
+        
+            <a href="/categories/browser-exploitation/" >
+                Browser Exploitation
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/ctfzone-quals-2024-wasminator/">CTFZone Quals 2024 - Wasminator</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 22, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+</article>
         
             
 <article class="">
@@ -619,74 +712,22 @@
 </header>
 </article>
         
-            
-<article class="">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/ctf-writeup/" >
-                CTF Writeup
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/bi0sctf22-n0tes/">bi0sCTF22 - n0tes</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Jan 24, 2023</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    4 minute read
-                </time>
-            </div>
-        
-    </footer>
-    
-
-    
-</div>
-
-</header>
-</article>
-        
     </section>
+    <nav class='pagination'>
+        
+        
+
+        
+            
+                <span class='page-link current'>1</span>
+                
+            
+            
+                    <a class='page-link' href='/page/2/'>2</a>
+                
+            
+    </nav>
+
 <footer class="site-footer">
     <section class="copyright">
         &copy; 

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Understanding V8&amp;rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
 Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.'>
 <title>V8 Internals - Understanding V8 Compiler Pipeline</title>
 
 <link rel='canonical' href='https://sanjayvardhan.github.io/posts/v8-internals-understanding-v8-compiler-pipeline/'>
 
 <link rel="stylesheet" href="/scss/style.min.abbd69b2908fdfcd5179898beaafd374514a86538d81639ddd2c58c06ae54e40.css"><meta property='og:title' content='V8 Internals - Understanding V8 Compiler Pipeline'>
-<meta property='og:description' content='Understanding V8&amp;rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
+<meta property='og:description' content='Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
 Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.'>
 <meta property='og:url' content='https://sanjayvardhan.github.io/posts/v8-internals-understanding-v8-compiler-pipeline/'>
 <meta property='og:site_name' content='spektre'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='V8' /><meta property='article:tag' content='Browser' /><meta property='article:tag' content='Internals' /><meta property='article:published_time' content='2024-01-02T06:32:41&#43;05:30'/><meta property='article:modified_time' content='2024-01-02T06:32:41&#43;05:30'/>
 <meta name="twitter:title" content="V8 Internals - Understanding V8 Compiler Pipeline">
-<meta name="twitter:description" content="Understanding V8&amp;rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
+<meta name="twitter:description" content="Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.
 Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.">
     <link rel="shortcut icon" href="/favicon.png" />
+
+  
+
 
     </head>
     <body class="
@@ -59,7 +62,7 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
                     
                     
                         
-                        <img src="/img/avatar_hu57344d127bf18d6098b7d59f0847eb26_46956_300x0_resize_box_3.png" width="300"
+                        <img src="/img/avatar_hu4832408906922234309.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -181,6 +184,25 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
         
 
         <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://sanjayvardhan.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
             
             
         </div>
@@ -353,14 +375,14 @@ Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in 
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">13.8.1 The Addition Operator ( + )
-NOTE
-The addition operator either performs string concatenation or numeric addition.
-
-13.8.1.1 Runtime Semantics: Evaluation
-AdditiveExpression : AdditiveExpression + MultiplicativeExpression
-1. Return ? EvaluateStringOrNumericBinaryExpression(AdditiveExpression, +, MultiplicativeExpression).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">13.8.1 The Addition Operator ( + )
+</span></span><span class="line"><span class="cl">NOTE
+</span></span><span class="line"><span class="cl">The addition operator either performs string concatenation or numeric addition.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">13.8.1.1 Runtime Semantics: Evaluation
+</span></span><span class="line"><span class="cl">AdditiveExpression : AdditiveExpression + MultiplicativeExpression
+</span></span><span class="line"><span class="cl">1. Return ? EvaluateStringOrNumericBinaryExpression(AdditiveExpression, +, MultiplicativeExpression).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -374,15 +396,15 @@ AdditiveExpression : AdditiveExpression + MultiplicativeExpression
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">13.15.4 EvaluateStringOrNumericBinaryExpression ( leftOperand, opText, rightOperand )
-The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments leftOperand (a Parse Node), opText (a sequence of Unicode code points), and rightOperand (a Parse Node) and returns either a normal completion containing either a String, a BigInt, or a Number, or an abrupt completion. It performs the following steps when called:
-
-1. Let lref be ? Evaluation of leftOperand.
-2. Let lval be ? GetValue(lref).
-3. Let rref be ? Evaluation of rightOperand.
-4. Let rval be ? GetValue(rref).
-5. Return ? ApplyStringOrNumericBinaryOperator(lval, opText, rval).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">13.15.4 EvaluateStringOrNumericBinaryExpression ( leftOperand, opText, rightOperand )
+</span></span><span class="line"><span class="cl">The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments leftOperand (a Parse Node), opText (a sequence of Unicode code points), and rightOperand (a Parse Node) and returns either a normal completion containing either a String, a BigInt, or a Number, or an abrupt completion. It performs the following steps when called:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. Let lref be ? Evaluation of leftOperand.
+</span></span><span class="line"><span class="cl">2. Let lval be ? GetValue(lref).
+</span></span><span class="line"><span class="cl">3. Let rref be ? Evaluation of rightOperand.
+</span></span><span class="line"><span class="cl">4. Let rval be ? GetValue(rref).
+</span></span><span class="line"><span class="cl">5. Return ? ApplyStringOrNumericBinaryOperator(lval, opText, rval).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -432,51 +454,51 @@ The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments l
 </span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">13.15.3 ApplyStringOrNumericBinaryOperator ( lval, opText, rval )
-The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (an ECMAScript language value), opText (**, *, /, %, +, -, &lt;&lt;, &gt;&gt;, &gt;&gt;&gt;, &amp;, ^, or |), and rval (an ECMAScript language value) and returns either a normal completion containing either a String, a BigInt, or a Number, or a throw completion. It performs the following steps when called:
-
-1. If opText is +, then
-    a. Let lprim be ? ToPrimitive(lval).
-    b. Let rprim be ? ToPrimitive(rval).
-    c. If lprim is a String or rprim is a String, then
-        i. Let lstr be ? ToString(lprim).
-        ii. Let rstr be ? ToString(rprim).
-        iii. Return the string-concatenation of lstr and rstr.
-    d. Set lval to lprim.
-    e. Set rval to rprim.
-2. NOTE: At this point, it must be a numeric operation.
-3. Let lnum be ? ToNumeric(lval).
-4. Let rnum be ? ToNumeric(rval).
-5. If Type(lnum) is not Type(rnum), throw a TypeError exception.
-6. If lnum is a BigInt, then
-    a. If opText is **, return ? BigInt::exponentiate(lnum, rnum).
-    b. If opText is /, return ? BigInt::divide(lnum, rnum).
-    c. If opText is %, return ? BigInt::remainder(lnum, rnum).
-    d. If opText is &gt;&gt;&gt;, return ? BigInt::unsignedRightShift(lnum, rnum).
-7. Let operation be the abstract operation associated with opText and Type(lnum) in the following table:
-        opText	Type(lnum)	operation
-        **	Number	Number::exponentiate
-        *	Number	Number::multiply
-	*	BigInt	BigInt::multiply
-	/	Number	Number::divide
-	%	Number	Number::remainder
-	+	Number	Number::add
-	+	BigInt	BigInt::add
-	-	Number	Number::subtract
-	-	BigInt	BigInt::subtract
-	&lt;&lt;	Number	Number::leftShift
-	&lt;&lt;	BigInt	BigInt::leftShift
-	&gt;&gt;	Number	Number::signedRightShift
-	&gt;&gt;	BigInt	BigInt::signedRightShift
-	&gt;&gt;&gt;	Number	Number::unsignedRightShift
-	&amp;	Number	Number::bitwiseAND
-	&amp;	BigInt	BigInt::bitwiseAND
-	^	Number	Number::bitwiseXOR
-	^	BigInt	BigInt::bitwiseXOR
-	|	Number	Number::bitwiseOR
-	|	BigInt	BigInt::bitwiseOR
-8. Return operation(lnum, rnum).
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">13.15.3 ApplyStringOrNumericBinaryOperator ( lval, opText, rval )
+</span></span><span class="line"><span class="cl">The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (an ECMAScript language value), opText (**, *, /, %, +, -, &lt;&lt;, &gt;&gt;, &gt;&gt;&gt;, &amp;, ^, or |), and rval (an ECMAScript language value) and returns either a normal completion containing either a String, a BigInt, or a Number, or a throw completion. It performs the following steps when called:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. If opText is +, then
+</span></span><span class="line"><span class="cl">    a. Let lprim be ? ToPrimitive(lval).
+</span></span><span class="line"><span class="cl">    b. Let rprim be ? ToPrimitive(rval).
+</span></span><span class="line"><span class="cl">    c. If lprim is a String or rprim is a String, then
+</span></span><span class="line"><span class="cl">        i. Let lstr be ? ToString(lprim).
+</span></span><span class="line"><span class="cl">        ii. Let rstr be ? ToString(rprim).
+</span></span><span class="line"><span class="cl">        iii. Return the string-concatenation of lstr and rstr.
+</span></span><span class="line"><span class="cl">    d. Set lval to lprim.
+</span></span><span class="line"><span class="cl">    e. Set rval to rprim.
+</span></span><span class="line"><span class="cl">2. NOTE: At this point, it must be a numeric operation.
+</span></span><span class="line"><span class="cl">3. Let lnum be ? ToNumeric(lval).
+</span></span><span class="line"><span class="cl">4. Let rnum be ? ToNumeric(rval).
+</span></span><span class="line"><span class="cl">5. If Type(lnum) is not Type(rnum), throw a TypeError exception.
+</span></span><span class="line"><span class="cl">6. If lnum is a BigInt, then
+</span></span><span class="line"><span class="cl">    a. If opText is **, return ? BigInt::exponentiate(lnum, rnum).
+</span></span><span class="line"><span class="cl">    b. If opText is /, return ? BigInt::divide(lnum, rnum).
+</span></span><span class="line"><span class="cl">    c. If opText is %, return ? BigInt::remainder(lnum, rnum).
+</span></span><span class="line"><span class="cl">    d. If opText is &gt;&gt;&gt;, return ? BigInt::unsignedRightShift(lnum, rnum).
+</span></span><span class="line"><span class="cl">7. Let operation be the abstract operation associated with opText and Type(lnum) in the following table:
+</span></span><span class="line"><span class="cl">        opText	Type(lnum)	operation
+</span></span><span class="line"><span class="cl">        **	Number	Number::exponentiate
+</span></span><span class="line"><span class="cl">        *	Number	Number::multiply
+</span></span><span class="line"><span class="cl">	*	BigInt	BigInt::multiply
+</span></span><span class="line"><span class="cl">	/	Number	Number::divide
+</span></span><span class="line"><span class="cl">	%	Number	Number::remainder
+</span></span><span class="line"><span class="cl">	+	Number	Number::add
+</span></span><span class="line"><span class="cl">	+	BigInt	BigInt::add
+</span></span><span class="line"><span class="cl">	-	Number	Number::subtract
+</span></span><span class="line"><span class="cl">	-	BigInt	BigInt::subtract
+</span></span><span class="line"><span class="cl">	&lt;&lt;	Number	Number::leftShift
+</span></span><span class="line"><span class="cl">	&lt;&lt;	BigInt	BigInt::leftShift
+</span></span><span class="line"><span class="cl">	&gt;&gt;	Number	Number::signedRightShift
+</span></span><span class="line"><span class="cl">	&gt;&gt;	BigInt	BigInt::signedRightShift
+</span></span><span class="line"><span class="cl">	&gt;&gt;&gt;	Number	Number::unsignedRightShift
+</span></span><span class="line"><span class="cl">	&amp;	Number	Number::bitwiseAND
+</span></span><span class="line"><span class="cl">	&amp;	BigInt	BigInt::bitwiseAND
+</span></span><span class="line"><span class="cl">	^	Number	Number::bitwiseXOR
+</span></span><span class="line"><span class="cl">	^	BigInt	BigInt::bitwiseXOR
+</span></span><span class="line"><span class="cl">	|	Number	Number::bitwiseOR
+</span></span><span class="line"><span class="cl">	|	BigInt	BigInt::bitwiseOR
+</span></span><span class="line"><span class="cl">8. Return operation(lnum, rnum).
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>All these steps for a seemingly simple addition highlight why optimization is crucial. V8 engages in &ldquo;speculation&rdquo; during the execution of JavaScript code, collecting information to use when the engine decides to tier up, thus producing optimized code.</p>
 <h3 id="speculative-optimization">Speculative Optimization</h3>

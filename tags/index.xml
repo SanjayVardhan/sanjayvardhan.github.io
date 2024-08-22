@@ -6,7 +6,31 @@
         <description>Recent content in Tags on spektre</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 13 Jan 2024 14:02:58 +0530</lastBuildDate><atom:link href="https://sanjayvardhan.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 22 Aug 2024 16:55:07 +0530</lastBuildDate><atom:link href="https://sanjayvardhan.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Browser Exploitation</title>
+        <link>https://sanjayvardhan.github.io/tags/browser-exploitation/</link>
+        <pubDate>Thu, 22 Aug 2024 16:55:07 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/browser-exploitation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>CTFZone Quals 2024</title>
+        <link>https://sanjayvardhan.github.io/tags/ctfzone-quals-2024/</link>
+        <pubDate>Thu, 22 Aug 2024 16:55:07 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/ctfzone-quals-2024/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>V8</title>
+        <link>https://sanjayvardhan.github.io/tags/v8/</link>
+        <pubDate>Thu, 22 Aug 2024 16:55:07 +0530</pubDate>
+        
+        <guid>https://sanjayvardhan.github.io/tags/v8/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Binary Exploitation</title>
         <link>https://sanjayvardhan.github.io/tags/binary-exploitation/</link>
         <pubDate>Sat, 13 Jan 2024 14:02:58 +0530</pubDate>
@@ -47,14 +71,6 @@
         <description></description>
         </item>
         <item>
-        <title>V8</title>
-        <link>https://sanjayvardhan.github.io/tags/v8/</link>
-        <pubDate>Tue, 02 Jan 2024 06:32:41 +0530</pubDate>
-        
-        <guid>https://sanjayvardhan.github.io/tags/v8/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Analysis</title>
         <link>https://sanjayvardhan.github.io/tags/analysis/</link>
         <pubDate>Tue, 02 Jan 2024 06:24:00 +0530</pubDate>
@@ -87,7 +103,7 @@
         <description></description>
         </item>
         <item>
-        <title>bi0sCTF2022</title>
+        <title>Bi0sCTF2022</title>
         <link>https://sanjayvardhan.github.io/tags/bi0sctf2022/</link>
         <pubDate>Tue, 24 Jan 2023 05:01:57 +0000</pubDate>
         
