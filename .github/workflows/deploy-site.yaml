@@ -27,10 +27,10 @@ jobs:
       with:
         node-version: 20
 
-    # - name: Install node modules
-    #   run: |
-    #     hugo mod npm pack
-    #     npm install        
+    - name: Install node modules
+      run: |
+        hugo mod npm pack
+        npm install        
 
     - name: Build
       run: hugo --minify
