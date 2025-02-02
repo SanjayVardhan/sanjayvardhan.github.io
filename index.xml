@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>spektre's Blog</title><link>https://spektre.in/</link><description>Recent content on spektre's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 02 Feb 2025 16:42:02 +0530</lastBuildDate><atom:link href="https://spektre.in/index.xml" rel="self" type="application/rss+xml"/><item><title>About Me</title><link>https://spektre.in/about/</link><pubDate>Sun, 02 Feb 2025 16:42:02 +0530</pubDate><guid>https://spektre.in/about/</guid><description>&lt;p>I&amp;rsquo;m Sanjay Vardhan, a Final Year CS Undergrad at Amrita University, Amritapuri Campus.&lt;/p>
-&lt;p>I like systems security, low-level development and exploitation. I&amp;rsquo;m an active CTF player and Team Lead @teambi0s. My current skills include linux userspace exploitation (stack and heap-based) and browser exploitation (V8, JSC).&lt;/p></description></item><item><title>CTFZone Quals 2024 - Wasminator</title><link>https://spektre.in/post/wasminator/</link><pubDate>Thu, 22 Aug 2024 16:55:07 +0530</pubDate><guid>https://spektre.in/post/wasminator/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>I like systems security, low-level development and exploitation. I&amp;rsquo;m an active CTF player and Captain @teambi0s. My current skills include linux userspace exploitation (stack and heap-based) and browser exploitation (V8, JSC).&lt;/p>
+&lt;p>You can find me on&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://x.com/0xspektre">Twitter&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/SanjayVardhan">GitHub&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>CTFZone Quals 2024 - Wasminator</title><link>https://spektre.in/post/wasminator/</link><pubDate>Thu, 22 Aug 2024 16:55:07 +0530</pubDate><guid>https://spektre.in/post/wasminator/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
 &lt;p>I tried this challenge during the CTF but wasnt able to solve it. The challenge had 0 solves in the end. So I tried solving it after the CTF ended.&lt;/p>
 &lt;h2 id="patch-analysis">Patch Analysis&lt;/h2>
 &lt;pre tabindex="0">&lt;code class="language-patch=" data-lang="patch=">diff --git a/src/objects/objects.cc b/src/objects/objects.cc
